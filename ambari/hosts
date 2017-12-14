@@ -1,0 +1,6 @@
+[ambari_host]
+10.0.0.6
+#[ambari_host:vars]
+#ambarihostname=ip-10-0-0-14.ec2.internal
+#hdp_ambari_repo=http://public-repo-1.hortonworks.com/ambari/centos7/2.x/updates/2.6.0.0/ambari.repo
+#hdp_ambari_agentrepo=http://public-repo-1.hortonworks.com/ambari/centos6/1.x/GA/ambari.repo
