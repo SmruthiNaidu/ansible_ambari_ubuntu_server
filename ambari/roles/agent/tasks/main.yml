@@ -1,0 +1,37 @@
+---
+    - name: Install NTP
+      yum:
+        pkg: ntp
+        state: installed
+
+    - name: Start NTP
+      service: name=ntpd state=started enabled=yes
+
+    - name: Disable SElinux permanetly
+      lineinfile: dest=/etc/selinux/config state=present create=no regexp='SELINUX=.*' line='SELINUX=disabled'
+
+    - name: Create Ambari Repo {{ hdp_ambari_agentrepo }}
+      get_url: url=http://public-repo-1.hortonworks.com/ambari/centos6/1.x/GA/ambari.repo dest=/etc/yum.repos.d/ambari.repo
+
+    - name: disable gpgcheck
+      lineinfile: dest=/etc/yum.repos.d/ambari.repo create=no state=present regexp='gpgcheck' line='gpgcheck=0'
+
+    - name: Clean YUM
+      command: yum clean all
+
+    - name: Install Ambari Agent
+      yum:
+        pkg: ambari-agent
+        state: installed
+
+    - name: Configure Ambari agent to register at Ambari server
+      lineinfile:
+        dest=/etc/ambari-agent/conf/ambari-agent.ini
+        create=no
+        state=present
+        regexp='hostname=.*'
+        line='hostname={{ansible_hostname}}'
+
+    - name: Start Ambari agent
+      service: name=ambari-agent state=started enabled=yes
+
