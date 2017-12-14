@@ -1,7 +1,0 @@
----
-- hosts: ambari_host
-  user: root
-  roles:
-    - role: java
-    - role: agent
-#    - role: server
